@@ -1,7 +1,12 @@
+import "./globals.css";
 import {NextIntlClientProvider} from 'next-intl';
 import {getMessages} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
+import Header from "./components/header/Header";
+import { Roboto } from "next/font/google";
+
+const roboto = Roboto({ subsets: ["cyrillic"], weight: ["400", "700"] });
  
 export default async function LocaleLayout({
   children,
@@ -21,8 +26,9 @@ export default async function LocaleLayout({
  
   return (
     <html lang={locale}>
-      <body>
+      <body className={roboto.className}>
         <NextIntlClientProvider messages={messages}>
+        <Header />
           {children}
         </NextIntlClientProvider>
       </body>
