@@ -31,6 +31,10 @@
     },
     "buyLink": {
       "type": "string"
+    },
+    "isMainEvent": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
