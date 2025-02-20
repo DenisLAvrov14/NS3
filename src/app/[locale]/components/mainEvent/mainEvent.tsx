@@ -1,52 +1,103 @@
-'use client';
+import { EventType } from "@/types/event";
 
-import { useEffect, useState } from 'react';
-import Image from 'next/image';
-import { Post } from '../../models/Post';
+interface MainEventProps {
+  event: EventType;
+}
 
-export default function MainEvent() {
-  const [mainEvent, setMainEvent] = useState<Post | null>(null);
-
-  useEffect(() => {
-    fetch('http://localhost:1337/api/posts')
-      .then((res) => res.json())
-      .then((data) => {
-        const mainPost = data.data.find((post: Post) => post.isMainEvent);
-        if (mainPost) setMainEvent(mainPost);
-      });
-  }, []);
-
-  if (!mainEvent) return null;
-
+export default function MainEvent({ event }: MainEventProps) {
   return (
-    <div className="bg-[#FC7357] p-8 shadow-lg flex items-center justify-center mx-auto h-[350px]">
-      <div className="rounded-lg flex items-center justify-center h-[250px]">
-        {mainEvent.imageUrl && (
-          <Image
-            src={mainEvent.imageUrl}
-            alt={mainEvent.Title}
-            width={700}
-            height={400}
-            className="rounded-lg object-cover w-full h-full"
-          />
-        )}
-      </div>
-      <div className="w-4/5 h-full flex flex-col items-center justify-center text-center p-8 bg-white rounded-lg shadow-md">
-        <h2 className="text-black font-bold text-2xl">{mainEvent.Title}</h2>
-        <p className="text-md text-gray-700 mt-4">
-          {mainEvent.content[0]?.children[0]?.text || 'Описание отсутствует'}
-        </p>
-        {mainEvent.buyLink && (
-          <a
-            href={mainEvent.buyLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 bg-[#E07B67] text-white px-8 py-3 rounded-lg shadow-lg hover:bg-[#d06a5c] transition-all text-lg"
+    <section className="w-full flex justify-center py-16 bg-[#111111]">
+      <div
+        className="relative flex items-center justify-between max-w-[1140px] w-full shadow-lg main-event px-12 py-10 h-[400px] overflow-hidden"
+        style={{
+          backgroundImage: `url(http://localhost:8055/assets/${event.image})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundBlendMode: "multiply",
+          maskImage: `url('/ticket-mask.svg')`,
+          WebkitMaskImage: `url('/ticket-mask.svg')`,
+          maskSize: "100% 100%",
+          WebkitMaskSize: "100% 100%",
+          maskRepeat: "no-repeat",
+          WebkitMaskRepeat: "no-repeat",
+        }}
+      >
+        {/* Контейнер для текста */}
+        <div className="relative z-10 flex flex-col justify-between w-[60%] text-white">
+          {/* Тип события */}
+          {event.eventType && (
+            <p
+              className="mt-2 text-yellow-400"
+              style={{
+                fontFamily: "Zangezi08_Trial",
+                fontWeight: 400,
+                fontStyle: "italic",
+                fontSize: "30px",
+                lineHeight: "30px",
+                letterSpacing: "0%",
+              }}
+            >
+              {event.eventType}
+            </p>
+          )}
+
+          {/* Заголовок события (фиксируем высоту) */}
+          <h1
+            className="uppercase tracking-wide overflow-hidden"
+            style={{
+              fontFamily: "Murs Gothic Trial",
+              fontWeight: 900,
+              fontSize: "80px",
+              lineHeight: "75px",
+              letterSpacing: "0%",
+              maxHeight: "150px", // Чтобы не расширял весь контейнер
+            }}
           >
-            Купить
-          </a>
+            {event.title}
+          </h1>
+
+          {/* Кнопка Купить */}
+          <div className="mt-4">
+            <a
+              href={event.buy_link}
+              className="bg-yellow-500 text-black font-bold text-[20px] px-6 py-3 w-[209px] h-[50px] flex items-center justify-center rounded-[15px] hover:bg-yellow-400 transition text-center"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Купить билет на ${event.title}`}
+            >
+              Купить билеты
+            </a>
+          </div>
+        </div>
+
+        {/* Дата в правом нижнем углу (уменьшил padding, ближе к цифрам) */}
+        {event.date && (
+          <div className="absolute bottom-[30px] right-[40px] transform rotate-6 bg-yellow-400 text-black font-extrabold px-[10px] py-[4px] text-center leading-tight">
+            <span
+              className="block"
+              style={{
+                fontFamily: "Murs Gothic Trial",
+                fontWeight: 1000,
+                fontSize: "60px",
+                lineHeight: "50px",
+              }}
+            >
+              {event.date.split(".")[0]}.
+            </span>
+            <span
+              className="block"
+              style={{
+                fontFamily: "Murs Gothic Trial",
+                fontWeight: 1000,
+                fontSize: "60px",
+                lineHeight: "50px",
+              }}
+            >
+              {event.date.split(".")[1]}
+            </span>
+          </div>
         )}
       </div>
-    </div>
+    </section>
   );
 }

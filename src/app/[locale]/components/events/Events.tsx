@@ -1,46 +1,50 @@
-'use client'
+import { getEvents } from "@/lib/getEvents";
+import { EventType } from "@/types/event";
 
-import { useEffect, useState } from 'react';
-import { Post } from '../../models/Post';
-
-export default function Events() {
-  const [events, setEvents] = useState<Post[]>([]);
-
-  useEffect(() => {
-    fetch('http://localhost:1337/api/posts')
-      .then((res) => res.json())
-      .then((data) => {
-        // Исключаем главное событие
-        const filteredEvents = data.data.filter((post: Post) => !post.isMainEvent);
-        setEvents(filteredEvents);
-      });
-  }, []);
+export default async function Events() {
+  const events = await getEvents();
 
   return (
-    <div className="min-h-screen bg-[#FC7357] p-8">
-      <div className="container mx-auto">
-        <h1 className="text-4xl font-bold text-black mb-6 text-center">События</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event) => (
-            <div key={event.id} className="bg-white rounded-lg shadow-md p-4">
-              <h2 className="text-xl text-black font-semibold">{event.Title}</h2>
-              <p className="mt-2 text-gray-700">
-                {event.content[0]?.children[0]?.text || 'Без описания'}
-              </p>
-              {event.buyLink && (
+    <section className="w-full bg-black text-white py-16">
+      <div className="max-w-[1140px] mx-auto">
+        {/* Заголовок */}
+        <h2 className="text-[70px] font-bold mb-8">Скоро</h2>
+
+        {/* Список событий */}
+        <div className="flex flex-col gap-4">
+          {events
+            .filter((event: EventType) => !event.is_past_event) // Оставляем только будущие события
+            .map((event: EventType) => (
+              <div
+                key={event.id}
+                className="grid grid-cols-[2fr_70px_70px_1fr_170px] items-center border-b border-gray-700 pb-4"
+              >
+                {/* Название */}
+                <h3 className="text-[40px] italic text-red-600">{event.title}</h3>
+
+                {/* Дата */}
+                <span className="text-[18px] text-red-600 font-bold">{event.date}</span>
+
+                {/* Время */}
+                <span className="text-[18px]">{event.time}</span>
+
+                {/* Место проведения */}
+                <span className="text-[18px] text-white">{event.location}</span>
+
+                {/* Кнопка "Купить билет" */}
                 <a
-                  href={event.buyLink}
+                  href={event.buy_link}
+                  className="bg-yellow-500 text-black font-bold text-[18px] px-4 py-2 rounded-md hover:bg-yellow-400 transition text-center"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 block text-center bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                  aria-label={`Купить билет на ${event.title}`}
                 >
-                  Купить
+                  Купить билет
                 </a>
-              )}
-            </div>
-          ))}
+              </div>
+            ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }

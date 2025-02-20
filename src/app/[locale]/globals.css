@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Murs Gothic Trial';
+  src: url('/fonts/MursGothicTrial.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Zangezi08_Trial';
+  src: url('/fonts/Zangezi08_Trial.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -18,4 +32,21 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.mask-ticket {
+  mask-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 10px,
+    black 10px,
+    black 20px
+  );
+  -webkit-mask-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 10px,
+    black 10px,
+    black 20px
+  );
 }

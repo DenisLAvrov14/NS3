@@ -1,12 +1,13 @@
-'use client';
-
 import Events from "./components/events/Events";
-import MainEvent from "./components/mainEvent/mainEvent";
+import { getMainEvent } from "@/lib/getMainEvent";
+import MainEvent from "./components/mainEvent/MainEvent";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const mainEvent = await getMainEvent();
+
   return (
     <div>
-      <MainEvent />
+      {mainEvent && <MainEvent event={mainEvent} />}
       <Events />
     </div>
   );
