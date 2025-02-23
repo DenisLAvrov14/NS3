@@ -11,10 +11,18 @@ export default function Header() {
 
       {/* Навигация */}
       <nav className="flex space-x-8 text-white text-[18px] font-medium">
-        <Link href="#soon" className="hover:text-gray-400 transition">Скоро</Link>
-        <Link href="#past" className="hover:text-gray-400 transition">Уже выступили</Link>
-        <Link href="#about" className="hover:text-gray-400 transition">О нас</Link>
-        <Link href="#contacts" className="hover:text-gray-400 transition">Контакты</Link>
+        <Link href="#soon" className="hover:text-gray-400 transition">
+          Скоро
+        </Link>
+        <Link href="#past" className="hover:text-gray-400 transition">
+          Уже выступили
+        </Link>
+        <Link href="#about" className="hover:text-gray-400 transition">
+          О нас
+        </Link>
+        <Link href="#contacts" className="hover:text-gray-400 transition">
+          Контакты
+        </Link>
       </nav>
     </header>
   );
