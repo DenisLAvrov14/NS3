@@ -1,0 +1,13 @@
+cors:
+  enabled: true
+  origin: "http://localhost:3000"
+  methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"]
+  headers: ["Content-Type", "Authorization"]
+  expose: ["Content-Length", "Content-Range"]
+  credentials: true # Если требуются куки или токены
+storage:
+  public: true
+security:
+  asset_permissions: false
+files:
+  public: true
