@@ -4,14 +4,14 @@
 
 @font-face {
   font-family: "Murs Gothic Trial";
-  src: url("/fonts/MursGothicTrial.woff2") format("woff2");
-  font-weight: 900;
+  src: url("/fonts/mursgothic-widedark.woff2") format("woff2");
+  font-weight: 900; /* Жирный вариант */
   font-style: normal;
 }
 
 @font-face {
   font-family: "Zangezi08_Trial";
-  src: url("/fonts/Zangezi08_Trial.woff2") format("woff2");
+  src: url("/fonts/Zangezi08_Trial-Italic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
 }

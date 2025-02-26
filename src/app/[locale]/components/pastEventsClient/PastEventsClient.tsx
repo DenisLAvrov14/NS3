@@ -3,35 +3,29 @@
 import { useState } from "react";
 import { PastEventType } from "@/types/pastEventType";
 import PastEventCard from "../pastEventCard/PastEventCard";
+import { useTranslations } from "next-intl";
 
 type PastEventsClientProps = {
   events: PastEventType[];
 };
 
 const PastEventsClient: React.FC<PastEventsClientProps> = ({ events }) => {
+  const t = useTranslations("pastEvents"); // Подключаем переводы
+
   const INITIAL_VISIBLE = 4;
   const LOAD_MORE = 4;
 
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE);
   const hasMoreEvents = events.length > INITIAL_VISIBLE && visibleCount < events.length;
 
-  console.log("visibleCount:", visibleCount);
-  console.log("Total events:", events.length);
-  console.log("hasMoreEvents:", hasMoreEvents);
-
   const showMoreEvents = () => {
     setVisibleCount((prev) => Math.min(prev + LOAD_MORE, events.length));
   };
 
-  // Вызываем console.log() перед возвратом JSX
-  if (hasMoreEvents) {
-    console.log("Rendering button!");
-  }
-
   return (
     <section className="relative py-16 bg-[#111] text-white text-center">
       {/* Заголовок */}
-      <h2 className="text-[70px] font-bold font-golos mb-12">Уже выступили</h2>
+      <h2 className="text-[70px] font-bold font-golos mb-12">{t("title")}</h2>
 
       <div className="relative max-w-[1140px] mx-auto">
         {/* Карточки */}
@@ -54,11 +48,12 @@ const PastEventsClient: React.FC<PastEventsClientProps> = ({ events }) => {
             onClick={showMoreEvents}
             className="text-[18px] text-red-500 underline hover:text-red-700 transition-all"
           >
-            Будем смотреть?
+            {t("loadMore")}
           </button>
         </div>
       )}
     </section>
   );
 };
+
 export default PastEventsClient;

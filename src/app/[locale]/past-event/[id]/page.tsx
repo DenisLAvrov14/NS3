@@ -1,6 +1,6 @@
 import { getEventData } from "@/lib/getEventData";
-import EventPage from "../../components/eventPage/EventPage";
 import { getPastEvents } from "@/lib/getPastEvents";
+import PastEventPage from "../../components/pastEventPage/pastEventPage";
 import PastEvents from "../../components/pastEvents/PastEvents";
 import Footer from "../../components/footer/Footer";
 
@@ -8,7 +8,7 @@ export default async function Page({ params }: { params: { locale: string; id: s
   const { locale, id } = params;
   const pastEvents = await getPastEvents();
 
-  console.log("Fetching event data for", locale, id);
+  console.log("Fetching past event data for", locale, id);
 
   const event = await getEventData(locale, id);
 
@@ -18,7 +18,7 @@ export default async function Page({ params }: { params: { locale: string; id: s
 
   return (
     <div>
-      <EventPage event={event} />
+      <PastEventPage event={event} />
       <PastEvents events={pastEvents.events.slice(0, 2)} />
       <Footer />
     </div>

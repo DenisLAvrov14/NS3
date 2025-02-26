@@ -2,5 +2,56 @@
   "home": {
     "title": "Events in Dubai",
     "description": "Book your tickets now!"
+  },
+  "event": {
+    "notFound": "Event not found",
+    "buyTicket": "Buy Ticket",
+    "description": "Event Description"
+  },
+  "aboutUs": {
+    "title": "We are a young company organizing concerts in Dubai",
+    "paragraph1": "We have extensive experience in organizing events of various formats and scales in Russia and Kazakhstan.",
+    "paragraph2": "Since 2024, we are in the UAE and want to delight Russian-speaking residents and guests with interesting and emotional events!"
+  },
+  "events": {
+    "title": "Coming Soon",
+    "buyTicket": "Buy Ticket",
+    "noEvents": "No events found"
+  },
+  "pastEvents": {
+    "title": "Already Performed",
+    "loadMore": "Shall we watch?"
+  },
+
+  "footer": {
+    "socials": "Our Socials",
+    "partners": "For Partners",
+    "menu": "Menu",
+    "presentation": "Presentation",
+    "soon": "Coming Soon",
+    "pastEvents": "Already Performed",
+    "aboutUs": "About Us"
+  },
+  "header": {
+    "soon": "Coming Soon",
+    "pastEvents": "Already Performed",
+    "aboutUs": "About Us",
+    "contacts": "Contacts"
+  },
+  "mainEvent": {
+    "buyTickets": "Buy Tickets"
+  },
+  "pastEventPage": {
+    "eventNotFound": "Event not found",
+    "noImages": "No images available"
+  },
+  "pastEventTicket": {
+    "eventFinished": "Event Completed",
+    "photoReport": "Photo Report"
+  },
+
+  "eventTicket": {
+    "buyTickets": "Buy Tickets",
+    "noTickets": "No tickets available"
   }
 }

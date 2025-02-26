@@ -1,10 +1,15 @@
+"use client";
+
 import { EventType } from "@/types/event";
+import { useTranslations } from "next-intl";
 
 interface MainEventProps {
   event: EventType;
 }
 
 export default function MainEvent({ event }: MainEventProps) {
+  const t = useTranslations("mainEvent"); // Подключаем переводы
+
   return (
     <section className="w-full flex justify-center py-16 bg-[#111111]">
       <div
@@ -41,7 +46,7 @@ export default function MainEvent({ event }: MainEventProps) {
             </p>
           )}
 
-          {/* Заголовок события (фиксируем высоту) */}
+          {/* Заголовок события */}
           <h1
             className="uppercase tracking-wide overflow-hidden"
             style={{
@@ -50,7 +55,7 @@ export default function MainEvent({ event }: MainEventProps) {
               fontSize: "80px",
               lineHeight: "75px",
               letterSpacing: "0%",
-              maxHeight: "150px", // Чтобы не расширял весь контейнер
+              maxHeight: "150px",
             }}
           >
             {event.title}
@@ -63,38 +68,63 @@ export default function MainEvent({ event }: MainEventProps) {
               className="bg-yellow-500 text-black font-bold text-[20px] px-6 py-3 w-[209px] h-[50px] flex items-center justify-center rounded-[15px] hover:bg-yellow-400 transition text-center"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Купить билет на ${event.title}`}
+              aria-label={`${t("buyTickets")} на ${event.title}`}
             >
-              Купить билеты
+              {t("buyTickets")}
             </a>
           </div>
         </div>
 
-        {/* Дата в правом нижнем углу (уменьшил padding, ближе к цифрам) */}
+        {/* Дата в правом нижнем углу */}
         {event.date && (
-          <div className="absolute bottom-[30px] right-[40px] transform rotate-6 bg-yellow-400 text-black font-extrabold px-[10px] py-[4px] text-center leading-tight">
-            <span
-              className="block"
-              style={{
-                fontFamily: "Murs Gothic Trial",
-                fontWeight: 1000,
-                fontSize: "60px",
-                lineHeight: "50px",
-              }}
-            >
-              {event.date.split(".")[0]}.
-            </span>
-            <span
-              className="block"
-              style={{
-                fontFamily: "Murs Gothic Trial",
-                fontWeight: 1000,
-                fontSize: "60px",
-                lineHeight: "50px",
-              }}
-            >
-              {event.date.split(".")[1]}
-            </span>
+          <div
+            className="absolute bottom-[30px] right-[40px] transform rotate-6 bg-yellow-400 text-black px-[10px] py-[4px] text-center leading-tight"
+            style={{ fontWeight: "normal" }}
+          >
+            {event.date.split(".").map((part, partIndex) => (
+              <span
+                key={partIndex}
+                className="block"
+                style={{
+                  fontWeight: "normal",
+                  fontSize: "60px",
+                  lineHeight: "50px",
+                }}
+              >
+                {part.split("").map((char, charIndex) => {
+                  const globalIndex = partIndex === 0 ? charIndex : charIndex + 3;
+                  return (
+                    <span
+                      key={charIndex}
+                      style={{
+                        fontFamily: "Murs Gothic Trial",
+                        fontWeight: globalIndex === 1 || globalIndex === 4 ? "bold" : "normal",
+                        fontSize: "60px",
+                        lineHeight: "50px",
+                        display: "inline-block",
+                        filter: globalIndex === 1 || globalIndex === 4 ? "none" : "brightness(1.1)",
+                      }}
+                    >
+                      {char}
+                    </span>
+                  );
+                })}
+                {partIndex === 0 && (
+                  <span
+                    style={{
+                      fontFamily: "Murs Gothic Trial",
+                      fontWeight: "normal",
+                      fontSize: "60px",
+                      lineHeight: "50px",
+                      display: "inline-block",
+                      marginLeft: "5px",
+                    }}
+                  >
+                    .
+                  </span>
+                )}
+              </span>
+            ))}
           </div>
         )}
       </div>

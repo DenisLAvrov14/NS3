@@ -2,27 +2,25 @@
 
 import { EventData } from "@/types/eventData";
 import EventImages from "../eventImages/EventImages";
-import DOMPurify from "isomorphic-dompurify"; // Защита от XSS
-import EventTicket from "../eventTicket/EventTicket";
-import PastEvents from "../pastEvents/PastEvents";
-import Footer from "../footer/Footer";
-import { getPastEvents } from "@/lib/getPastEvents";
+import DOMPurify from "isomorphic-dompurify";
+import PastEventTicket from "../pastEventTicket/PastEventTicket";
+import { useTranslations } from "next-intl";
 
-interface EventPageProps {
+interface PastEventPageProps {
   event: EventData;
 }
 
-export default function EventPage({ event }: EventPageProps) {
+export default function PastEventPage({ event }: PastEventPageProps) {
+  const t = useTranslations("pastEventPage"); // Подключаем переводы
+
   if (!event) {
-    return <p className="text-gray-400">Событие не найдено</p>;
+    return <p className="text-gray-400">{t("eventNotFound")}</p>;
   }
 
-  console.log("Event data:", event);
+  console.log("Past Event data:", event);
 
-  // Проверяем, есть ли изображения
-  const formattedImages = Array.isArray(event.images)
-    ? event.images.map((img) => (img ? `http://localhost:8055/assets/${img}` : ""))
-    : [];
+  // Формируем массив ссылок на изображения
+  const formattedImages = event.images?.map((img) => `http://localhost:8055/assets/${img}`) || [];
 
   // Очищаем описание от HTML-тегов
   const cleanDescription = event.description
@@ -35,7 +33,7 @@ export default function EventPage({ event }: EventPageProps) {
       {formattedImages.length > 0 ? (
         <EventImages images={formattedImages} />
       ) : (
-        <p className="text-gray-400">Нет изображений</p>
+        <p className="text-gray-400">{t("noImages")}</p>
       )}
 
       {/* Основной блок */}
@@ -46,14 +44,9 @@ export default function EventPage({ event }: EventPageProps) {
           <p className="text-lg">{cleanDescription}</p>
         </div>
 
-        {/* Блок с билетами */}
+        {/* Блок с информацией о прошедшем мероприятии */}
         <div className="relative left-[90px]">
-          <EventTicket
-            date={event.date}
-            time={event.time}
-            location={event.location}
-            buyLink={event.buy_link}
-          />
+          <PastEventTicket location={event.location} />
         </div>
       </div>
     </div>

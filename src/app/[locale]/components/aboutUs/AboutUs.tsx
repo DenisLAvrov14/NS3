@@ -1,4 +1,10 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
 const AboutUs = () => {
+  const t = useTranslations("aboutUs");
+
   return (
     <section className="relative w-[1140px] h-[387px] bg-[#E40000] rounded-[40px] flex items-center p-10">
       {/* Левая часть: Лого (SVG) */}
@@ -32,21 +38,9 @@ const AboutUs = () => {
 
       {/* Правая часть: Текст */}
       <div className="w-1/2 text-white text-left">
-        <h2 className="text-3xl font-bold">
-          Мы — молодая компания
-          <br />
-          по организации концертов в Дубае
-        </h2>
-        <p className="mt-4 text-lg">
-          За нашими плечами большой опыт мероприятий
-          <br />
-          разных форматов и масштабов в России и Казахстане.
-        </p>
-        <p className="mt-4 text-lg">
-          С 2024 мы в ОАЭ и хотим радовать русскоязычных
-          <br />
-          жителей и гостей интересными и эмоциональными событиями!
-        </p>
+        <h2 className="text-3xl font-bold">{t("title")}</h2>
+        <p className="mt-4 text-lg">{t("paragraph1")}</p>
+        <p className="mt-4 text-lg">{t("paragraph2")}</p>
       </div>
     </section>
   );
