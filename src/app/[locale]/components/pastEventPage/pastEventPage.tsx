@@ -4,14 +4,15 @@ import { EventData } from "@/types/eventData";
 import EventImages from "../eventImages/EventImages";
 import DOMPurify from "isomorphic-dompurify";
 import PastEventTicket from "../pastEventTicket/PastEventTicket";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 interface PastEventPageProps {
   event: EventData;
 }
 
 export default function PastEventPage({ event }: PastEventPageProps) {
-  const t = useTranslations("pastEventPage"); // Подключаем переводы
+  const t = useTranslations("pastEventPage"); // Локализованные строки
+  const locale = useLocale(); // Текущий язык (например, "ru" или "en")
 
   if (!event) {
     return <p className="text-gray-400">{t("eventNotFound")}</p>;
@@ -19,34 +20,44 @@ export default function PastEventPage({ event }: PastEventPageProps) {
 
   console.log("Past Event data:", event);
 
+  // Получаем перевод события
+  const translation = event.translations?.find((t) => t.locale === locale);
+
+  // Выбираем данные: сначала из перевода, затем из оригинала
+  const title = translation?.title || event.title;
+  const location = translation?.location || event.location;
+  const description = translation?.description || event.description;
+
   // Формируем массив ссылок на изображения
   const formattedImages = event.images?.map((img) => `http://localhost:8055/assets/${img}`) || [];
 
   // Очищаем описание от HTML-тегов
-  const cleanDescription = event.description
-    ? DOMPurify.sanitize(event.description.replace(/<\/?[^>]+(>|$)/g, ""))
+  const cleanDescription = description
+    ? DOMPurify.sanitize(description.replace(/<\/?[^>]+(>|$)/g, ""))
     : "";
 
   return (
     <div className="w-full bg-black px-4 py-8 text-white flex flex-col items-center">
-      {/* Используем EventImages */}
+      {/* Блок с изображениями */}
       {formattedImages.length > 0 ? (
-        <EventImages images={formattedImages} />
+        <div className="w-full flex justify-center">
+          <EventImages images={formattedImages} />
+        </div>
       ) : (
         <p className="text-gray-400">{t("noImages")}</p>
       )}
 
-      {/* Основной блок */}
-      <div className="grid md:grid-cols-2 gap-[294px] mt-6 ml-auto mr-auto w-fit">
-        {/* Блок с заголовком и описанием */}
-        <div className="flex flex-col justify-center text-left">
-          <h1 className="text-4xl font-bold mb-4">{event.title}</h1>
-          <p className="text-lg">{cleanDescription}</p>
+      {/* Контейнер для текста и даты (в одну строчку) */}
+      <div className="w-full max-w-[1140px] mt-6 flex flex-col sm:flex-row items-start justify-between gap-6">
+        {/* Текстовый блок (Название + Описание) */}
+        <div className="flex-1 text-center sm:text-left">
+          <h1 className="text-2xl sm:text-4xl font-bold mb-4">{title}</h1>
+          <p className="text-base sm:text-lg">{cleanDescription}</p>
         </div>
 
-        {/* Блок с информацией о прошедшем мероприятии */}
-        <div className="relative left-[90px]">
-          <PastEventTicket location={event.location} />
+        {/* Блок с датой */}
+        <div className="w-[356px]">
+          <PastEventTicket location={location} />
         </div>
       </div>
     </div>

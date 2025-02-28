@@ -1,5 +1,5 @@
 export async function getEvents() {
-  const res = await fetch("http://localhost:8055/items/events", {
+  const res = await fetch("http://localhost:8055/items/events?fields=*,translations.*", {
     cache: "no-store",
   });
 

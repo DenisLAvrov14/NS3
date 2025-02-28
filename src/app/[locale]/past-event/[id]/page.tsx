@@ -6,7 +6,7 @@ import Footer from "../../components/footer/Footer";
 
 export default async function Page({ params }: { params: { locale: string; id: string } }) {
   const { locale, id } = params;
-  const pastEvents = await getPastEvents();
+  const pastEvents = await getPastEvents(locale);
 
   console.log("Fetching past event data for", locale, id);
 

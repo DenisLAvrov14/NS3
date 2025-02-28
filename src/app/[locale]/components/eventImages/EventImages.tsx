@@ -11,33 +11,31 @@ export default function EventImages({ images }: EventImagesProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
-    <div className="flex gap-6 items-start bg-black p-6 rounded-[40px] shadow-lg">
-      {/* Большое главное изображение */}
-      <div className="relative w-[875px] h-[480px] rounded-[40px] overflow-hidden">
+    <div className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 bg-black p-4 sm:p-6 rounded-[40px] shadow-lg w-full">
+      {/* Главное изображение (показывается всегда) */}
+      <div className="relative w-full sm:w-[875px] h-[240px] sm:h-[480px] rounded-[40px] overflow-hidden">
         {images.length > 0 && (
           <Image
             src={images[0]}
             alt="Main Image"
             fill
-            sizes="(max-width: 1200px) 100vw, 875px"
-            style={{ objectFit: "cover" }}
-            className="cursor-pointer"
+            sizes="(max-width: 768px) 100vw, 875px"
+            className="cursor-pointer object-cover"
             onClick={() => setSelectedImage(images[0])}
           />
         )}
       </div>
 
-      {/* Колонка с тремя маленькими изображениями */}
-      <div className="flex flex-col gap-4">
+      {/* Колонка с миниатюрами (скрывается на мобильных) */}
+      <div className="hidden sm:flex sm:flex-col gap-4 w-auto">
         {images.slice(1, 4).map((src, index) => (
-          <div key={index} className="relative w-[250px] h-[150px] rounded-[40px] overflow-hidden">
+          <div key={index} className="relative w-[250px] h-[150px] rounded-[20px] overflow-hidden">
             <Image
               src={src}
               alt={`Thumbnail ${index + 1}`}
               fill
-              sizes="(max-width: 600px) 100vw, 250px"
-              style={{ objectFit: "cover" }}
-              className="cursor-pointer"
+              sizes="250px"
+              className="cursor-pointer object-cover"
               onClick={() => setSelectedImage(src)}
             />
           </div>
@@ -47,17 +45,17 @@ export default function EventImages({ images }: EventImagesProps) {
       {/* Модальное окно с увеличенным изображением */}
       {selectedImage && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50"
+          className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center z-50 p-4"
           onClick={() => setSelectedImage(null)}
         >
-          <div className="relative w-3/4 h-3/4">
+          <div className="relative w-full max-w-[90%] h-auto">
             <Image
               src={selectedImage}
               alt="Selected"
-              fill
+              width={800}
+              height={600}
               sizes="100vw"
-              style={{ objectFit: "contain" }}
-              className="rounded-lg"
+              className="rounded-lg object-contain"
             />
           </div>
         </div>

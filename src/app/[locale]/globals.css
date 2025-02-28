@@ -3,8 +3,15 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Murs Gothic Trial";
-  src: url("/fonts/mursgothic-widedark.woff2") format("woff2");
+  font-family: "Murs Gothic Regular Italic";
+  src: url("/fonts/MursGothicTrial-MassiveBoldItalic.woff2") format("woff2");
+  font-weight: 400; /* Обычный вариант */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Murs Gothic Bold Italic";
+  src: url("/fonts/MursGothicTrial-MassiveBold.woff2") format("woff2");
   font-weight: 900; /* Жирный вариант */
   font-style: normal;
 }
@@ -14,6 +21,17 @@
   src: url("/fonts/Zangezi08_Trial-Italic.woff2") format("woff2");
   font-weight: 400;
   font-style: italic;
+}
+.mask-mobile {
+  background-image: url("/ticket-mask-vertical.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.mask-desktop {
+  background-image: url("/ticket-mask.svg");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 :root {

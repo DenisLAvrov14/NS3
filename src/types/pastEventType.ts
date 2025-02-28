@@ -1,3 +1,5 @@
+import { EventTranslation } from "./EventTranslation";
+
 export interface PastEventType {
   id: number;
   title: string;
@@ -5,4 +7,5 @@ export interface PastEventType {
   location: string;
   imageUrl: string;
   description: string;
+  translations?: EventTranslation[]; // Добавляем переводы
 }

@@ -1,3 +1,5 @@
+import { EventTranslation } from "./EventTranslation";
+
 export interface EventType {
   id: number;
   title: string;
@@ -10,4 +12,5 @@ export interface EventType {
   time: string; // Время события
   location: string; // Место проведения
   eventType: string; // Тип события
+  translations?: EventTranslation[]; // Добавляем переводы
 }

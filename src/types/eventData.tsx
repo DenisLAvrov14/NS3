@@ -1,3 +1,5 @@
+import { EventTranslation } from "./EventTranslation";
+
 export interface EventData {
   title: string;
   description: string;
@@ -8,4 +10,5 @@ export interface EventData {
   imageUrl: string;
   buy_link: string;
   time: string;
+  translations?: EventTranslation[]; // Добавляем переводы
 }
