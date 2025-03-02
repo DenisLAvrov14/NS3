@@ -6,7 +6,7 @@ const AboutUs = () => {
   const t = useTranslations("aboutUs");
 
   return (
-    <section className="relative w-full max-w-[1140px] sm:max-w-[1440px] h-auto sm:h-[400px] bg-[#E40000] rounded-[40px] flex flex-col sm:flex-row items-center sm:items-stretch p-6 sm:p-10">
+    <section className="relative w-full max-w-[1140px] sm:max-w-[1440px] h-auto sm:min-h-[400px] bg-[#E40000] rounded-[40px] flex flex-col sm:flex-row items-center sm:items-stretch p-6 sm:p-10 gap-6 sm:gap-12">
       {/* Левая часть: Лого (SVG) */}
       <div className="w-1/2 flex flex-col justify-center items-center text-black">
         <svg
@@ -37,10 +37,10 @@ const AboutUs = () => {
       </div>
 
       {/* Правая часть: Текст */}
-      <div className="w-full sm:w-1/2 text-white text-center sm:text-left flex flex-col justify-center">
-        <h2 className="text-xl sm:text-3xl font-bold">{t("title")}</h2>
-        <p className="mt-2 sm:mt-4 text-sm sm:text-lg">{t("paragraph1")}</p>
-        <p className="mt-2 sm:mt-4 text-sm sm:text-lg">{t("paragraph2")}</p>
+      <div className="w-full sm:w-1/2 max-w-[500px] text-white text-center sm:text-left flex flex-col justify-center">
+        <h2 className="text-xl sm:text-3xl font-bold leading-tight">{t("title")}</h2>
+        <p className="mt-3 sm:mt-5 text-sm sm:text-lg leading-snug">{t("paragraph1")}</p>
+        <p className="mt-3 sm:mt-5 text-sm sm:text-lg leading-snug">{t("paragraph2")}</p>
       </div>
     </section>
   );
