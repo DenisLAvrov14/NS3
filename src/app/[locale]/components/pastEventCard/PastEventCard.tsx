@@ -59,7 +59,7 @@ const PastEventCard: React.FC<{ event: PastEventType; index: number }> = ({ even
         </p>
 
         {/* Дата (ссылка) */}
-        <div className="absolute right-4 sm:right-6 bottom-4 sm:bottom-6 w-[70px] sm:w-[83px] h-[24px] sm:h-[28px] bg-yellow-400 rotate-[-6deg] flex items-center justify-center rounded-md shadow-md hover:bg-yellow-300 transition">
+        <div className="absolute right-4 sm:right-6 bottom-4 sm:bottom-6 w-[74px] sm:w-[87px] h-[24px] sm:h-[28px] bg-yellow-400 rotate-[-6deg] flex items-center justify-center shadow-md hover:bg-yellow-300 transition">
           <span className="text-black font-murs text-base sm:text-[20px] font-black uppercase">
             {event.date}
           </span>
