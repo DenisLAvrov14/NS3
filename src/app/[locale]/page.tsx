@@ -16,10 +16,23 @@ export default async function HomePage() {
   return (
     <div>
       {mainEvent && <MainEventClient event={mainEvent} />}
-      <EventsComingSoonClient events={events} />
-      <PastEvents events={pastEvents.events} />
-      <AboutUsContainer />
-      <Footer />
+
+      {/* Добавляем id для скролла */}
+      <section id="soon">
+        <EventsComingSoonClient events={events} />
+      </section>
+
+      <section id="past">
+        <PastEvents events={pastEvents.events} />
+      </section>
+
+      <section id="about">
+        <AboutUsContainer />
+      </section>
+
+      <section id="contacts">
+        <Footer />
+      </section>
     </div>
   );
 }

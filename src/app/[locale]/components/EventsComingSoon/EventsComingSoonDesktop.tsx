@@ -2,6 +2,7 @@
 
 import { EventType } from "@/types/event";
 import { useTranslations, useLocale } from "next-intl";
+import Link from "next/link";
 
 interface Props {
   events: EventType[];
@@ -24,6 +25,7 @@ export default function EventsComingSoonDesktop({ events }: Props) {
               .filter((event) => !event.is_past_event)
               .map((event) => {
                 const translation = event.translations?.find((t) => t.locale === locale);
+                const eventUrl = `/${locale}/events/${event.id}`;
 
                 return (
                   <div
@@ -31,22 +33,33 @@ export default function EventsComingSoonDesktop({ events }: Props) {
                     className="grid grid-cols-[2fr_70px_70px_1fr_170px] items-center border-b border-gray-700 pb-4 gap-4"
                   >
                     {/* Название */}
-                    <h3 className="text-2xl sm:text-[40px] italic text-red-600">
+                    <Link
+                      href={eventUrl}
+                      className="text-2xl sm:text-[40px] italic text-red-600 hover:underline"
+                    >
                       {translation?.title || event.title}
-                    </h3>
+                    </Link>
 
                     {/* Дата */}
-                    <span className="text-lg sm:text-[18px] text-red-600 font-bold">
+                    <Link
+                      href={eventUrl}
+                      className="text-lg sm:text-[18px] text-red-600 font-bold hover:underline"
+                    >
                       {event.date}
-                    </span>
+                    </Link>
 
                     {/* Время */}
-                    <span className="text-lg sm:text-[18px]">{event.time}</span>
+                    <Link href={eventUrl} className="text-lg sm:text-[18px] hover:underline">
+                      {event.time}
+                    </Link>
 
                     {/* Место */}
-                    <span className="text-lg sm:text-[18px] text-white">
+                    <Link
+                      href={eventUrl}
+                      className="text-lg sm:text-[18px] text-white hover:underline"
+                    >
                       {translation?.location || event.location}
-                    </span>
+                    </Link>
 
                     {/* Кнопка "Купить билет" */}
                     <a

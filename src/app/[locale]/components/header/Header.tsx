@@ -3,39 +3,57 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
-  const t = useTranslations("header"); // Подключаем переводы
+  const t = useTranslations("header");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // Функция для плавного скролла
+  const scrollToSection = (id: string) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  // Следит за сменой пути, закрывает мобильное меню
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
 
   return (
     <header className="bg-black py-4 px-4 sm:px-8 md:px-16 flex items-center justify-between">
-      {/* Логотип */}
-      <div className="flex items-center">
+      {/* Логотип, теперь ведет на главную */}
+      <Link href="/" passHref>
         <Image
           src="/NSBdbrd.svg"
           alt="NSB Events"
           width={60}
           height={25}
-          className="sm:w-[80px] sm:h-[30px]"
+          className="cursor-pointer sm:w-[80px] sm:h-[30px]"
         />
-      </div>
+      </Link>
 
       {/* Десктопная навигация */}
       <nav className="hidden md:flex space-x-6 text-white text-[16px] sm:text-[18px] font-medium">
-        <Link href="#soon" className="hover:text-gray-400 transition">
+        <button onClick={() => scrollToSection("soon")} className="hover:text-gray-400 transition">
           {t("soon")}
-        </Link>
-        <Link href="#past" className="hover:text-gray-400 transition">
+        </button>
+        <button onClick={() => scrollToSection("past")} className="hover:text-gray-400 transition">
           {t("pastEvents")}
-        </Link>
-        <Link href="#about" className="hover:text-gray-400 transition">
+        </button>
+        <button onClick={() => scrollToSection("about")} className="hover:text-gray-400 transition">
           {t("aboutUs")}
-        </Link>
-        <Link href="#contacts" className="hover:text-gray-400 transition">
+        </button>
+        <button
+          onClick={() => scrollToSection("contacts")}
+          className="hover:text-gray-400 transition"
+        >
           {t("contacts")}
-        </Link>
+        </button>
       </nav>
 
       {/* Кнопка открытия мобильного меню */}
@@ -58,34 +76,42 @@ export default function Header() {
             ✕
           </button>
           <nav className="flex flex-col space-y-6 text-2xl">
-            <Link
-              href="#soon"
+            <button
+              onClick={() => {
+                scrollToSection("soon");
+                setIsMenuOpen(false);
+              }}
               className="hover:text-gray-400 transition"
-              onClick={() => setIsMenuOpen(false)}
             >
               {t("soon")}
-            </Link>
-            <Link
-              href="#past"
+            </button>
+            <button
+              onClick={() => {
+                scrollToSection("past");
+                setIsMenuOpen(false);
+              }}
               className="hover:text-gray-400 transition"
-              onClick={() => setIsMenuOpen(false)}
             >
               {t("pastEvents")}
-            </Link>
-            <Link
-              href="#about"
+            </button>
+            <button
+              onClick={() => {
+                scrollToSection("about");
+                setIsMenuOpen(false);
+              }}
               className="hover:text-gray-400 transition"
-              onClick={() => setIsMenuOpen(false)}
             >
               {t("aboutUs")}
-            </Link>
-            <Link
-              href="#contacts"
+            </button>
+            <button
+              onClick={() => {
+                scrollToSection("contacts");
+                setIsMenuOpen(false);
+              }}
               className="hover:text-gray-400 transition"
-              onClick={() => setIsMenuOpen(false)}
             >
               {t("contacts")}
-            </Link>
+            </button>
           </nav>
         </div>
       )}

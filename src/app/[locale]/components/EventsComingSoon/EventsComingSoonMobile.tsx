@@ -2,6 +2,7 @@
 
 import { EventType } from "@/types/event";
 import { useTranslations, useLocale } from "next-intl";
+import Link from "next/link";
 
 interface Props {
   events: EventType[];
@@ -22,19 +23,26 @@ export default function EventsComingSoonMobile({ events }: Props) {
               .filter((event) => !event.is_past_event)
               .map((event) => {
                 const translation = event.translations?.find((t) => t.locale === locale);
+                const eventUrl = `/${locale}/events/${event.id}`;
 
                 return (
                   <div key={event.id} className="flex flex-col border-b border-gray-700 pb-4">
-                    {/* Название */}
-                    <h3 className="text-2xl italic text-red-600">
+                    {/* Название (ссылка) */}
+                    <Link href={eventUrl} className="text-2xl italic text-red-600 hover:underline">
                       {translation?.title || event.title}
-                    </h3>
+                    </Link>
 
-                    {/* Дата, время, место (в строку) */}
+                    {/* Дата, время, место (в строку, все кликабельно) */}
                     <div className="flex flex-row items-center gap-2 text-lg">
-                      <span className="text-red-600 font-bold">{event.date}</span>
-                      <span>{event.time}</span>
-                      <span className="text-white">{translation?.location || event.location}</span>
+                      <Link href={eventUrl} className="text-red-600 font-bold hover:underline">
+                        {event.date}
+                      </Link>
+                      <Link href={eventUrl} className="hover:underline">
+                        {event.time}
+                      </Link>
+                      <Link href={eventUrl} className="text-white hover:underline">
+                        {translation?.location || event.location}
+                      </Link>
                     </div>
 
                     {/* Кнопка "Купить билет" */}
