@@ -39,41 +39,40 @@ export default function Header() {
         />
       </Link>
 
-      {/* Контейнер с языковым переключателем и бургер-меню */}
-      <div className="flex items-center gap-4">
-        {/* Переключатель языка */}
-        <div className="hidden sm:block">
+      {/* Десктопная навигация + переключатель языка */}
+      <div className="hidden md:flex items-center space-x-6 ml-auto">
+        <nav className="flex space-x-6 text-white text-[16px] sm:text-[18px] font-medium">
+          <button onClick={() => scrollToSection("soon")} className="hover:text-gray-400 transition">
+            {t("soon")}
+          </button>
+          <button onClick={() => scrollToSection("past")} className="hover:text-gray-400 transition">
+            {t("pastEvents")}
+          </button>
+          <button onClick={() => scrollToSection("about")} className="hover:text-gray-400 transition">
+            {t("aboutUs")}
+          </button>
+          <button
+            onClick={() => scrollToSection("contacts")}
+            className="hover:text-gray-400 transition"
+          >
+            {t("contacts")}
+          </button>
+        </nav>
+
+        {/* Переключатель языка (справа от меню) */}
+        <div className="ml-6">
           <LanguageSwitcher />
         </div>
-
-        {/* Кнопка открытия мобильного меню */}
-        <button
-          className="md:hidden text-white text-2xl"
-          onClick={() => setIsMenuOpen(true)}
-          aria-label="Открыть меню"
-        >
-          ☰
-        </button>
       </div>
 
-      {/* Десктопная навигация */}
-      <nav className="hidden md:flex space-x-6 text-white text-[16px] sm:text-[18px] font-medium">
-        <button onClick={() => scrollToSection("soon")} className="hover:text-gray-400 transition">
-          {t("soon")}
-        </button>
-        <button onClick={() => scrollToSection("past")} className="hover:text-gray-400 transition">
-          {t("pastEvents")}
-        </button>
-        <button onClick={() => scrollToSection("about")} className="hover:text-gray-400 transition">
-          {t("aboutUs")}
-        </button>
-        <button
-          onClick={() => scrollToSection("contacts")}
-          className="hover:text-gray-400 transition"
-        >
-          {t("contacts")}
-        </button>
-      </nav>
+      {/* Кнопка открытия мобильного меню */}
+      <button
+        className="md:hidden text-white text-2xl"
+        onClick={() => setIsMenuOpen(true)}
+        aria-label="Открыть меню"
+      >
+        ☰
+      </button>
 
       {/* Мобильное меню */}
       {isMenuOpen && (
