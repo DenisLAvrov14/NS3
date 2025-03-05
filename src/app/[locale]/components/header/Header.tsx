@@ -18,6 +18,7 @@ export default function Header() {
     if (section) {
       section.scrollIntoView({ behavior: "smooth" });
     }
+    setIsMenuOpen(false); // Закрываем мобильное меню при выборе
   };
 
   // Следит за сменой пути, закрывает мобильное меню
@@ -27,7 +28,7 @@ export default function Header() {
 
   return (
     <header className="bg-black py-4 px-4 sm:px-8 md:px-16 flex items-center justify-between">
-      {/* Логотип, теперь ведет на главную */}
+      {/* Логотип */}
       <Link href="/" passHref>
         <Image
           src="/NSBdbrd.svg"
@@ -38,9 +39,21 @@ export default function Header() {
         />
       </Link>
 
-      {/* Переключатель языка (сдвинут вправо) */}
-      <div className="ml-auto mr-6">
-        <LanguageSwitcher />
+      {/* Контейнер с языковым переключателем и бургер-меню */}
+      <div className="flex items-center gap-4">
+        {/* Переключатель языка */}
+        <div className="hidden sm:block">
+          <LanguageSwitcher />
+        </div>
+
+        {/* Кнопка открытия мобильного меню */}
+        <button
+          className="md:hidden text-white text-2xl"
+          onClick={() => setIsMenuOpen(true)}
+          aria-label="Открыть меню"
+        >
+          ☰
+        </button>
       </div>
 
       {/* Десктопная навигация */}
@@ -61,6 +74,49 @@ export default function Header() {
           {t("contacts")}
         </button>
       </nav>
+
+      {/* Мобильное меню */}
+      {isMenuOpen && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black z-50 flex flex-col items-center justify-center text-white">
+          <button
+            className="absolute top-6 right-6 text-3xl"
+            onClick={() => setIsMenuOpen(false)}
+            aria-label="Закрыть меню"
+          >
+            ✕
+          </button>
+          <nav className="flex flex-col space-y-6 text-2xl">
+            <button
+              onClick={() => scrollToSection("soon")}
+              className="hover:text-gray-400 transition"
+            >
+              {t("soon")}
+            </button>
+            <button
+              onClick={() => scrollToSection("past")}
+              className="hover:text-gray-400 transition"
+            >
+              {t("pastEvents")}
+            </button>
+            <button
+              onClick={() => scrollToSection("about")}
+              className="hover:text-gray-400 transition"
+            >
+              {t("aboutUs")}
+            </button>
+            <button
+              onClick={() => scrollToSection("contacts")}
+              className="hover:text-gray-400 transition"
+            >
+              {t("contacts")}
+            </button>
+          </nav>
+          {/* Переключатель языка в мобильном меню */}
+          <div className="mt-6">
+            <LanguageSwitcher />
+          </div>
+        </div>
+      )}
     </header>
   );
 }

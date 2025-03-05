@@ -18,12 +18,12 @@ export default function LanguageSwitcher() {
   };
 
   return (
-    <div className="flex ml-4 bg-gray-700 rounded-[8px] p-[2px]">
+    <div className="flex ml-2 sm:ml-4 bg-gray-700 rounded-[8px] p-[2px] sm:p-1">
       {" "}
-      {/* Уменьшаем отступ и padding */}
+      {/* Уменьшаем отступы на мобилках */}
       <button
         onClick={() => changeLanguage("ru")}
-        className={`px-3 py-1 text-sm rounded-[8px] transition ${
+        className={`px-3 py-1 text-xs sm:text-sm rounded-[8px] transition ${
           currentLocale === "ru" ? "bg-yellow-400 text-black" : "bg-gray-500 text-white"
         }`}
       >
@@ -31,7 +31,7 @@ export default function LanguageSwitcher() {
       </button>
       <button
         onClick={() => changeLanguage("en")}
-        className={`px-3 py-1 text-sm rounded-[8px] transition ${
+        className={`px-3 py-1 text-xs sm:text-sm rounded-[8px] transition ${
           currentLocale === "en" ? "bg-yellow-400 text-black" : "bg-gray-500 text-white"
         }`}
       >
