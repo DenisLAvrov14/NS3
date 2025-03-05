@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import Header from "./components/header/Header";
 import { Roboto } from "next/font/google";
+import { Suspense } from "react";
 
 const roboto = Roboto({ subsets: ["cyrillic"], weight: ["400", "700"] });
 
@@ -15,21 +16,22 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  // Ensure that the incoming `locale` is valid
+  // Проверяем, что язык допустимый
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
 
-  // Providing all messages to the client
-  // side is the easiest way to get started
+  // Загружаем переводы
   const messages = await getMessages();
 
   return (
     <html lang={locale}>
       <body className={roboto.className}>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={messages} key={locale}>
           <Header />
-          {children}
+          <Suspense fallback={<div className="h-screen w-full bg-black"></div>}>
+            {children}
+          </Suspense>
         </NextIntlClientProvider>
       </body>
     </html>

@@ -56,7 +56,6 @@ export default function PastEventPage({ event }: PastEventPageProps) {
         </div>
 
         {/* Блок с датой */}
-        {/* Блок с датой */}
         <div className="w-full flex justify-center sm:w-[356px] sm:justify-start">
           <PastEventTicket location={location} />
         </div>
